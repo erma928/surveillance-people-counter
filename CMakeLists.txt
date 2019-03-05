@@ -5,7 +5,10 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(OpenCV 4 REQUIRED)
+option(ENABLE_NEON "ENABLE_NEON" ON)
+option(ENABLE_VFPV3 "ENABLE_VFPV3" ON)
+
+find_package(OpenCV REQUIRED)
 
 include(CMakeToolsHelpers OPTIONAL)
 

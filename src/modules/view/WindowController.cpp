@@ -52,6 +52,7 @@ public:
             ->setGridCellImage(0, 0, frame)
             ->setGridCellImage(0, 1, debugFrame)
             ->draw();
+
     }
     
     void onFrameWithPersonDetected(const Mat& frame, const Mat& debugFrame, const Person* person) {

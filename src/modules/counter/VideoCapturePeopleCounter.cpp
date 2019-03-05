@@ -4,6 +4,7 @@
 using namespace std::chrono;
 
 #define PERSON_MIN_CONTOUR_AREA 1500
+#define UNREGISTER_OLD_CONTOUR_FRAMES 32
 
 class VideoCapturePeopleCounter {
 
@@ -14,7 +15,7 @@ public:
     int peopleWhoEnteredCount = 0;
     int peopleWhoExitedCount = 0;
     
-    VideoCapturePeopleCounterDelegate* delegate;
+    VideoCapturePeopleCounterDelegate* delegate = NULL;
     
     VideoCapturePeopleCounter(const string& videoCapturePath) {
         this->backgroundSubstractor = createBackgroundSubtractorMOG2();
@@ -34,8 +35,14 @@ public:
 
     void start() {
         Mat frame;
-        VideoCapture videoCapture(videoCapturePath);
-
+        VideoCapture videoCapture;
+        try {
+            int idx = stoi(videoCapturePath);
+            videoCapture.open(idx);
+        } catch (invalid_argument ia) {
+            videoCapture.open(videoCapturePath);
+        }
+        printf("Video FPS: %.3f\n", videoCapture.get(CAP_PROP_FPS));
         while (videoCapture.isOpened()) {
             if (!videoCapture.read(frame)) break;
             if (++frameNumber == 1) {
@@ -43,13 +50,20 @@ public:
                 refLine = Line(0, refLineY, frame.cols, refLineY);
             }
             
-            // erase old contours (seen 16 frames ago)
+            // erase old contours (seen 16 frames ago) -- CHANGED TO 100 frames
             unregisterPersonIf([&](const Person* p) {
-                return frameNumber - lastFrameWherePersonWasSeen[p] > 16;
+                return frameNumber - lastFrameWherePersonWasSeen[p] > UNREGISTER_OLD_CONTOUR_FRAMES;
             });
             
             // and then process the current frame
             processFrame(frame);
+
+            if (delegate != NULL) {
+                char key = waitKey(10);
+                if (key == 27 || key == 'q' || key == 'Q') {
+                    break;
+                }
+            }
         }
     }
 
@@ -173,6 +187,12 @@ private:
         // notify delegate of frame process
         if (delegate != NULL) {
             delegate->onFrameProcess(frame, tempFrame);
+        }
+
+        if (frameNumber % UNREGISTER_OLD_CONTOUR_FRAMES == 0) {
+            printf("%d entered \t", peopleWhoEnteredCount);
+            printf("%d exited \t", peopleWhoExitedCount);
+            cout<<"for frame #"<<frameNumber<<endl;
         }
     }
 
