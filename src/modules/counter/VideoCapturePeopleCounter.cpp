@@ -3,7 +3,7 @@
 
 using namespace std::chrono;
 
-#define PERSON_MIN_CONTOUR_AREA 2000
+#define PERSON_MIN_CONTOUR_AREA 1500
 
 class VideoCapturePeopleCounter {
 
@@ -38,7 +38,10 @@ public:
 
         while (videoCapture.isOpened()) {
             if (!videoCapture.read(frame)) break;
-            if (++frameNumber == 1) refLine = Line(0, refLineY, frame.cols, refLineY);
+            if (++frameNumber == 1) {
+                setRefLineY(frame.rows/2);
+                refLine = Line(0, refLineY, frame.cols, refLineY);
+            }
             
             // erase old contours (seen 16 frames ago)
             unregisterPersonIf([&](const Person* p) {
