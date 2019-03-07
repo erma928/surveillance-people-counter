@@ -1,4 +1,4 @@
-#include "help.cpp"
+#include "help.hpp"
 #include "modules/counter.hpp"
 #include "modules/view.hpp"
 

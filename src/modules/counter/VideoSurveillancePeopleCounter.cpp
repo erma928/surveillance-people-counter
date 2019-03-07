@@ -4,7 +4,7 @@
 using namespace std::chrono;
 
 #define PERSON_MIN_CONTOUR_AREA 1500
-#define UNREGISTER_OLD_CONTOUR_FRAMES 32
+#define UNREGISTER_OLD_CONTOUR_FRAMES 16
 
 class VideoSurveillancePeopleCounter {
 
@@ -42,7 +42,8 @@ public:
         } catch (invalid_argument ia) {
             videoCapture.open(videoCapturePath);
         }
-        printf("Video FPS: %.3f\n", videoCapture.get(CAP_PROP_FPS));
+        fps = round(videoCapture.get(CAP_PROP_FPS));
+        printf("Video FPS: %d\n", fps);
         while (videoCapture.isOpened()) {
             if (!videoCapture.read(frame)) break;
             if (++frameNumber == 1) {
@@ -52,7 +53,7 @@ public:
             
             // erase old contours (seen 16 frames ago) -- CHANGED TO 100 frames
             unregisterPersonIf([&](const Person* p) {
-                return frameNumber - lastFrameWherePersonWasSeen[p] > UNREGISTER_OLD_CONTOUR_FRAMES;
+                return frameNumber - lastFrameWherePersonWasSeen[p] > fps;
             });
             
             // and then process the current frame
@@ -120,6 +121,9 @@ private:
     int refLineY;
 
     int frameNumber = 0;
+
+    int fps = UNREGISTER_OLD_CONTOUR_FRAMES;
+
     map<const Person*, int> lastFrameWherePersonWasSeen;
     map<const Person*, vector<Line> > linesCrossedByPerson;
 
@@ -189,7 +193,7 @@ private:
             delegate->onFrameProcess(frame, tempFrame);
         }
 
-        if (frameNumber % UNREGISTER_OLD_CONTOUR_FRAMES == 0) {
+        if (frameNumber % fps == 0) {
             printf("%d entered \t", peopleWhoEnteredCount);
             printf("%d exited \t", peopleWhoExitedCount);
             cout<<"for frame #"<<frameNumber<<endl;
