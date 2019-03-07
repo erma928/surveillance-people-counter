@@ -33,6 +33,5 @@ int main(int argc, char* argv[]) {
     if (show) {
         counter->delegate = new WindowController(counter);
     }
-    counter->setRefLineY(120);
     counter->start();
 }
