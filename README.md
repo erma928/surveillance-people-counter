@@ -3,7 +3,7 @@
 ## Introduction
 The program detects people passing through specific line position in video surveillance. 
 It makes uses of mog background modeling and subtraction process for contour detection per each frame. 
-It also utilizes a simple modeling of motion trace to decide people movement. The counts of entrance/exit 
+It also utilizes a simple modeling of motion trace to decide direction of people movement. The counts of entrance/exit 
 are shown in console as well as image window by providing the `-w` switch when running the program. 
 
 
