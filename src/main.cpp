@@ -4,13 +4,13 @@
 
 const String keys =
         "{help h usage ? |             | print this message   }"
-        "{@input         | <none>      | input camera/video for counter  }"
+        "{@input         | <none>      | input camera/video file for counter, e.g. 0 means from camera of your laptop }"
         "{w window       |             | show window or not  }"
 ;
 
 int main(int argc, char* argv[]) {
     CommandLineParser parser(argc, argv, keys);
-    parser.about("people counter v0.9.0");
+    parser.about("surveillance people counter v0.9.0");
 
     if (parser.has("help")) {
         parser.printMessage();
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    VideoCapturePeopleCounter* counter = new VideoCapturePeopleCounter(videoPath);
+    VideoSurveillancePeopleCounter* counter = new VideoSurveillancePeopleCounter(videoPath);
     if (show) {
         counter->delegate = new WindowController(counter);
     }

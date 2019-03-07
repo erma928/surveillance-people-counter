@@ -8,11 +8,11 @@ using namespace cv;
 #define COLOR_SHAPE_BOUNDS_RECT Scalar(0, 0, 255)
 #define COLOR_SHAPE_TRACE Scalar(255, 255, 0)
 
-class WindowController : public VideoCapturePeopleCounterDelegate {
+class WindowController : public VideoSurveillancePeopleCounterDelegate {
 
 public:
 
-    WindowController(const VideoCapturePeopleCounter* counter) {
+    WindowController(const VideoSurveillancePeopleCounter* counter) {
         this->counter = counter;
 
         showWindow();
@@ -37,7 +37,7 @@ public:
             //->addTrackbar("Closing", &c, 32);
     }
 
-    // VideoCapturePeopleCounterDelegate methods
+    // VideoSurveillancePeopleCounterDelegate methods
     
     void onFrameProcess(const Mat& frame, const Mat& debugFrame) {
         // draw measurement lines
@@ -71,7 +71,7 @@ public:
 
 private:
 
-    const VideoCapturePeopleCounter* counter; 
+    const VideoSurveillancePeopleCounter* counter;
     ImageGridWindow* window;
 
 };

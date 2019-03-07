@@ -1,5 +1,5 @@
 
-class VideoCapturePeopleCounterDelegate {
+class VideoSurveillancePeopleCounterDelegate {
 
 public:
     

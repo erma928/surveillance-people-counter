@@ -6,7 +6,7 @@ using namespace std::chrono;
 #define PERSON_MIN_CONTOUR_AREA 1500
 #define UNREGISTER_OLD_CONTOUR_FRAMES 32
 
-class VideoCapturePeopleCounter {
+class VideoSurveillancePeopleCounter {
 
 public:
 
@@ -15,14 +15,14 @@ public:
     int peopleWhoEnteredCount = 0;
     int peopleWhoExitedCount = 0;
     
-    VideoCapturePeopleCounterDelegate* delegate = NULL;
+    VideoSurveillancePeopleCounterDelegate* delegate = NULL;
     
-    VideoCapturePeopleCounter(const string& videoCapturePath) {
+    VideoSurveillancePeopleCounter(const string& videoCapturePath) {
         this->backgroundSubstractor = createBackgroundSubtractorMOG2();
         this->videoCapturePath = videoCapturePath;
     }
 
-    ~VideoCapturePeopleCounter() {
+    ~VideoSurveillancePeopleCounter() {
     }
 
     // setters

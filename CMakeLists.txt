@@ -1,4 +1,4 @@
-project(people-counter)
+project(surveillance-people-counter)
 
 cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 
@@ -14,6 +14,6 @@ include(CMakeToolsHelpers OPTIONAL)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(people-counter src/main.cpp)
+add_executable(surveillance-people-counter src/main.cpp)
 
-target_link_libraries(people-counter ${OpenCV_LIBS})
+target_link_libraries(surveillance-people-counter ${OpenCV_LIBS})

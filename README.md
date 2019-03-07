@@ -1,23 +1,20 @@
-# overhead-camera-people-counter
+# Video Surveillance People Counter
 
-## Why do it exists?
+## Introduction
+The program detects people passing through specific line position in video surveillance. 
+It makes uses of mog background modeling and subtraction process for contour detection per each frame. 
+It also utilizes a simple modeling of motion trace to decide people movement. The counts of entrance/exit 
+are shown in console as well as image window by providing the `-w` switch when running the program. 
 
-It was created out of the need to explore OpenCV library in order to count people passsing through a door. The algorithm is based on the thoughts written in this article http://www.femb.com.mx/people-counter.
 
-## How to build it?
+## Program Build
 
-### 1. Install dependencies
-
-Run the script which corresponding to your OS:
-
-* ./scripts/prebuild-linux.sh
-* ./scripts/prebuild-macos.sh
-* ./scripts/prebuild-windows.cmd
+### 1. Dependencies
+* `cmake`
+* `opencv >= 3.2.0`
     
 ### 2. Build
-
-From `overhead-camera-people-counter` root folder:
-
+From `surveillance-people-counter` root folder:
 ```
 mkdir build
 cd build
@@ -25,15 +22,18 @@ cmake ..
 make
 ```
 
-## How to run it?
-
-From `overhead-camera-people-counter` root folder:
-
+## Program Run
+From `surveillance-people-counter` root folder:
 ```
-./build/people-counter data/bus.avi
+./build/surveillance-people-counter -h
+surveillance people counter v0.9.0
+Usage: surveillance-people-counter [params] input 
+
+	-?, -h, --help, --usage (value:true)
+		print this message
+	-w, --window
+		show window or not
+
+	input (value:<none>)
+		input camera/video file for counter, e.g. 0 means from camera of your laptop
 ```
-
-## License
-
-[GPL-3.0](https://github.com/agurz/people-counter/blob/master/LICENSE)
-

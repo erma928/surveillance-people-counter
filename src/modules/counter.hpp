@@ -4,7 +4,7 @@
 #include "model.hpp"
 #include "util.hpp"
 
-#include "counter/VideoCapturePeopleCounterDelegate.cpp"
-#include "counter/VideoCapturePeopleCounter.cpp"
+#include "counter/VideoSurveillancePeopleCounterDelegate.cpp"
+#include "counter/VideoSurveillancePeopleCounter.cpp"
 
 #endif
